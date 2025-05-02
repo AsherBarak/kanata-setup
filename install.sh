@@ -2,7 +2,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_URL=${REPO_URL:-"https://github.com/USERNAME/kanata-setup.git"}
+REPO_URL=${REPO_URL:-"https://github.com/AsherBarak/kanata-setup.git"}
 
 echo "[+] Ensuring Homebrew..."
 if ! command -v brew >/dev/null 2>&1; then
