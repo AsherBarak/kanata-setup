@@ -1,0 +1,7 @@
+
+(defcfg
+  input = ".*"
+  output = "virtual"
+)
+
+(layer base)

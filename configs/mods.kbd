@@ -1,0 +1,41 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;  mods.kbd  –  identical on macOS & Windows
+;;  home-row tap/hold modifiers  +  Space → nav layer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defcfg
+  input  = ".*"          ; accept any keyboard
+  output = "virtual"
+  tap-hold-delay = 200   ; ms before a hold becomes a modifier
+)
+
+;;;;;;;;;;;;;;;;  default layer  ;;;;;;;;;;;;;;;;
+(layer base
+  caps   = (layer-toggle mods)      ; Caps toggles the whole setup
+)
+
+;;;;;;;;;;;;;;;;  main working layer  ;;;;;;;;;;;
+(layer mods
+  a      = (tap-hold a lctrl)       ; Ctrl / ⌃
+  s      = (tap-hold s lalt)        ; Alt / ⌥
+  d      = (tap-hold d lgui)        ; Super / ⌘
+  f      = (tap-hold f lshift)      ; Shift
+
+  j      = (tap-hold j rshift)
+  k      = (tap-hold k rgui)
+  l      = (tap-hold l ralt)
+  sem    = (tap-hold ; rctrl)
+
+  space  = (tap-hold space (layer nav))
+)
+
+;;;;;;;;;;;;;;;;  navigation layer  ;;;;;;;;;;;;;
+(layer nav
+  i = up
+  k = down
+  j = left
+  l = right
+  o = home
+  u = end
+)
