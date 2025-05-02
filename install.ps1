@@ -1,6 +1,6 @@
 
 param(
-    [string]$RepoUrl = "https://github.com/USERNAME/kanata-setup.git"
+    [string]$RepoUrl = "https://github.com/AsherBarak/kanata-setup.git"
 )
 
 Write-Host "[+] Ensuring Scoop..."
