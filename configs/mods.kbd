@@ -5,22 +5,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defcfg
-  input  = ".*"          ; accept any keyboard
+  input  = ".*"          ;; accept any keyboard
   output = "virtual"
-  tap-hold-delay = 200   ; ms before a hold becomes a modifier
+  tap-hold-delay = 200   ;; ms before a hold becomes a modifier
 )
 
 ;;;;;;;;;;;;;;;;  default layer  ;;;;;;;;;;;;;;;;
 (layer base
-  caps   = (layer-toggle mods)      ; Caps toggles the whole setup
+  caps   = (layer-toggle mods)      ;; Caps toggles the whole setup
 )
 
 ;;;;;;;;;;;;;;;;  main working layer  ;;;;;;;;;;;
 (layer mods
-  a      = (tap-hold a lctrl)       ; Ctrl / ⌃
-  s      = (tap-hold s lalt)        ; Alt / ⌥
-  d      = (tap-hold d lgui)        ; Super / ⌘
-  f      = (tap-hold f lshift)      ; Shift
+  a      = (tap-hold a lctrl)       ;; Ctrl / ⌃
+  s      = (tap-hold s lalt)        ;; Alt / ⌥
+  d      = (tap-hold d lgui)        ;; Super / ⌘
+  f      = (tap-hold f lshift)      ;; Shift
 
   j      = (tap-hold j rshift)
   k      = (tap-hold k rgui)
