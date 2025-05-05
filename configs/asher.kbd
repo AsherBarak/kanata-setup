@@ -1,0 +1,83 @@
+(defcfg
+  process-unmapped-keys yes
+  concurrent-tap-hold   yes
+)
+
+(defsrc
+  esc    f1    f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12
+  grv    1     2     3     4     5     6     7     8     9     0     -     =     bspc
+  tab    q     w     e     r     t     y     u     i     o     p     [     ]
+  caps   a     s     d     f     g     h     j     k     l     ;     '     \     ret
+  lsft   z     x     c     v     b     n     m     ,     .     /     rsft
+  fn     lctl  lalt  lmet              spc               rmet  ralt  ◀    ▲ ▼    ▶
+)
+
+(deflayer base
+  _     🔅    🔆    mctl  sls   dtn   dnd   ◀◀    ▶⏸    ▶▶    🔇    🔉    🔊
+  _     _     _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _     _     _     _     _     _     _     _     _
+  @fn   _     _     _                 _                 _     _     _    _ _    _
+)
+
+(deflayer fn
+  _     f1    f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12
+  _     _     _     _     _     _     _     _     _     _     _     _     _     del
+  _     _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _     _     _     _     _     _     _     _     _
+  _     _     _     _                 _                 _     _     ⤒    ⇞ ⇟    ⤓
+)
+
+(defalias
+  fn (tap-hold 250 250 fn (layer-toggle fn))
+)
+
+
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;  mods.kbd  –  identical on macOS & Windows
+;;  home-row tap/hold modifiers  +  Space → nav layer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defcfg
+  input  = ".*"          ; accept any keyboard
+  output = "virtual"
+  tap-hold-delay = 200   ; ms before a hold becomes a modifier
+)
+
+;;;;;;;;;;;;;;;;  default layer  ;;;;;;;;;;;;;;;;
+(layer base
+  caps   = (layer-toggle mods)      ; Caps toggles the whole setup
+)
+
+;;;;;;;;;;;;;;;;  main working layer  ;;;;;;;;;;;
+(layer mods
+  a      = (tap-hold a lctrl)       ; Ctrl / ⌃
+  s      = (tap-hold s lalt)        ; Alt / ⌥
+  d      = (tap-hold d lgui)        ; Super / ⌘
+  f      = (tap-hold f lshift)      ; Shift
+
+  j      = (tap-hold j rshift)
+  k      = (tap-hold k rgui)
+  l      = (tap-hold l ralt)
+  sem    = (tap-hold ; rctrl)
+
+  space  = (tap-hold space (layer nav))
+)
+
+;;;;;;;;;;;;;;;;  navigation layer  ;;;;;;;;;;;;;
+(layer nav
+  i = up
+  k = down
+  j = left
+  l = right
+  o = home
+  u = end
+)
