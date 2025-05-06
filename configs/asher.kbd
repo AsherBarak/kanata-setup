@@ -1,83 +1,107 @@
-(defcfg
-  process-unmapped-keys yes
-  concurrent-tap-hold   yes
-)
-
 (defsrc
   esc    f1    f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12
   grv    1     2     3     4     5     6     7     8     9     0     -     =     bspc
   tab    q     w     e     r     t     y     u     i     o     p     [     ]
-  caps   a     s     d     f     g     h     j     k     l     ;     '     \     ret
+  caps   a     s     d     f    g     h      j     k     l     ;     '     \     ret
   lsft   z     x     c     v     b     n     m     ,     .     /     rsft
-  fn     lctl  lalt  lmet              spc               rmet  ralt  ◀    ▲ ▼    ▶
+  fn     lctl  lalt  lmet              spc               rmet  ralt  lft    up down    rght
 )
 
 (deflayer base
-  _     🔅    🔆    mctl  sls   dtn   dnd   ◀◀    ▶⏸    ▶▶    🔇    🔉    🔊
-  _     _     _     _     _     _     _     _     _     _     _     _     _     _
-  _     _     _     _     _     _     _     _     _     _     _     _     _
-  _     _     _     _     _     _     _     _     _     _     _     _     _     _
-  _     _     _     _     _     _     _     _     _     _     _     _
-  @fn   _     _     _                 _                 _     _     _    _ _    _
+  _      brdwn brup  mctl  sls   dtn   dnd   prev  pp    next  mute  voldwn volu
+  _      _     _     _     _     _     _     _     _     _     _     _     _     _
+  _      _     _     _     _     _     _     _     _     _     _     _     _
+  lrld   @a    @s    @d    @f   _     _      @j    @k    @l    @;    _     _     _
+  _      _     _     _     _     _     _     _     _     _     _     _
+  @fn    _     _     _                 @spc              _     _     _      _  _       _
+)
+
+(deflayer nav
+  _      _     _     _     _     _     _     _     _     _     _     _     _
+  _      _     _     _     _     _     _     _     _     _     _     _     _     del
+  _      _     _     _     _     _     _     _     up    _     _     _     _
+  _      _     _     _     _    _     _      lft   down  rght  _     _     _     _
+  _      _     _     _     _     _     _     _     _     _     _     _
+  _      _     _     _                 _                 _     _     home   pgup pgdn    end
 )
 
 (deflayer fn
-  _     f1    f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12
-  _     _     _     _     _     _     _     _     _     _     _     _     _     del
-  _     _     _     _     _     _     _     _     _     _     _     _     _
-  _     _     _     _     _     _     _     _     _     _     _     _     _     _
-  _     _     _     _     _     _     _     _     _     _     _     _
-  _     _     _     _                 _                 _     _     ⤒    ⇞ ⇟    ⤓
+  _      f1    f2    f3    f4    f5    f6    f7    f8    f9    f10   f11   f12
+  _      _     _     _     _     _     _     _     _     _     _     _     _     del
+  _      _     _     _     _     _     _     _     _     _     _     _     _
+  _      _     _     _     _    _     _      _     _     _     _     _     _     _
+  _      _     _     _     _     _     _     _     _     _     _     _
+  _      _     _     _                 _                 _     _     home   pgup pgdn    end
 )
 
 (defalias
   fn (tap-hold 250 250 fn (layer-toggle fn))
 )
 
-
-
-
-
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;  mods.kbd  –  identical on macOS & Windows
-;;  home-row tap/hold modifiers  +  Space → nav layer
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (defcfg
-  input  = ".*"          ; accept any keyboard
-  output = "virtual"
-  tap-hold-delay = 200   ; ms before a hold becomes a modifier
+  process-unmapped-keys   yes
+  concurrent-tap-hold     yes
+  allow-hardware-repeat   no
 )
 
-;;;;;;;;;;;;;;;;  default layer  ;;;;;;;;;;;;;;;;
-(layer base
-  caps   = (layer-toggle mods)      ; Caps toggles the whole setup
+(defvar
+  ;; Note: consider using different time values for your different fingers.
+  ;; For example, your pinkies might be slower to release keys and index
+  ;; fingers faster.
+  tap-time 200
+  hold-time 200
+
+  left-hand-keys (
+    q w e r t
+    a s d f g
+    z x c v b
+  )
+  right-hand-keys (
+    y u i o p
+    h j k l ;
+    n m , . /
+  )
 )
 
-;;;;;;;;;;;;;;;;  main working layer  ;;;;;;;;;;;
-(layer mods
-  a      = (tap-hold a lctrl)       ; Ctrl / ⌃
-  s      = (tap-hold s lalt)        ; Alt / ⌥
-  d      = (tap-hold d lgui)        ; Super / ⌘
-  f      = (tap-hold f lshift)      ; Shift
-
-  j      = (tap-hold j rshift)
-  k      = (tap-hold k rgui)
-  l      = (tap-hold l ralt)
-  sem    = (tap-hold ; rctrl)
-
-  space  = (tap-hold space (layer nav))
+(deffakekeys
+  to-base (layer-switch base)
 )
 
-;;;;;;;;;;;;;;;;  navigation layer  ;;;;;;;;;;;;;
-(layer nav
-  i = up
-  k = down
-  j = left
-  l = right
-  o = home
-  u = end
+(defchordsv2
+  ;; TODO: Works but caps lock LED light doesn't turn on
+  (lsft rsft) caps 300 all-released ()
+  (w e) esc 300 all-released ()
+  (i o) bspc 300 all-released ()
+  (x c) tab 300 all-released ()
+  (, .) ret 300 all-released ()
+)
+
+(defalias
+  tap (multi
+    ;;(layer-switch nomods)
+    (on-idle-fakekey to-base tap 20)
+  )
+
+  ;; tap for esc, hold for lctl
+  caps (tap-hold $tap-time $hold-time esc lctl)
+
+  ;; Home row mods
+  a (tap-hold-release-keys $tap-time $hold-time (multi a @tap) lsft $left-hand-keys)
+  s (tap-hold-release-keys $tap-time $hold-time (multi s @tap) lctl $left-hand-keys)
+  d (tap-hold-release-keys $tap-time $hold-time (multi d @tap) lalt $left-hand-keys)
+  f (tap-hold-release-keys $tap-time $hold-time (multi f @tap) lmet $left-hand-keys)
+  j (tap-hold-release-keys $tap-time $hold-time (multi j @tap) rmet $right-hand-keys)
+  k (tap-hold-release-keys $tap-time $hold-time (multi k @tap) ralt $right-hand-keys)
+  l (tap-hold-release-keys $tap-time $hold-time (multi l @tap) rctl $right-hand-keys)
+  ; (tap-hold-release-keys $tap-time $hold-time (multi ; @tap) rsft $right-hand-keys)
+  spc (tap-hold $tap-time $hold-time spc (layer-toggle nav))
+
+  fnl (tap-hold 200 200 fn (layer-toggle fn))
+
+  ;; macOS function key glyphs
+  mc C-up ;; Mission Control
+  sls M-spc ;; Spotlight Search
+  dtn S-C-A-M-f5 ;; Dictation
+  dnd S-C-A-M-f6 ;; Do Not Disturb
+  lp S-C-A-M-l ;; Launchpad
 )
