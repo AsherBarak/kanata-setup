@@ -36,7 +36,7 @@ cat > "$PLIST" <<EOF
     <array>
       <string>$(which kanata)</string>
       <string>--cfg</string>
-      <string>$HOME/.config/kanata/mods.kbd</string>
+      <string>$HOME/.config/kanata/asher.kbd</string>
       <string>--reload-on-sighup</string>
     </array>
   <key>RunAtLoad</key>      <true/>
