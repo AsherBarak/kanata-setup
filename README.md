@@ -7,7 +7,7 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 
 * Identical keymap on both operating systems  
 * Home‑row tap/hold: **A‑S‑D‑F / J‑K‑L‑;** become Ctrl‑Alt‑Super‑Shift  
-* **Space** held = arrow/navigation layer (IJKL arrows, O/U Home/End)  
+* **Space** held = arrow/navigation layer (IJKL arrows, O/U Home/End, M,> move one word, F/S chrome tabs)  
 * **CapsLock** held = hebrew (use with patience - takes a bit of time to kick in) 
 
 ## Quick install
