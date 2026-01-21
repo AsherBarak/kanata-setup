@@ -21,7 +21,7 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 ### Windows 10/11 (PowerShell)
 
 ```powershell
-irm https://raw.githubusercontent.com/USERNAME/kanata-setup/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/AsherBarak/kanata-setup/main/install.ps1 | iex
 ```
 
 Replace **USERNAME** with your GitHub account after you upload this repo.
