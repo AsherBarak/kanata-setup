@@ -15,7 +15,7 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 ### macOS
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/USERNAME/kanata-setup/main/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/AsherBarak/kanata-setup/main/install.sh)"
 ```
 
 ### Windows 10/11 (PowerShell)
@@ -23,8 +23,6 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 ```powershell
 irm https://raw.githubusercontent.com/AsherBarak/kanata-setup/main/install.ps1 | iex
 ```
-
-Replace **USERNAME** with your GitHub account after you upload this repo.
 
 ## Folder structure
 
