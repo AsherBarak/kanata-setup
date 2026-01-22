@@ -47,4 +47,3 @@ launchctl unload "$PLIST" >/dev/null 2>&1 || true
 launchctl load "$PLIST"
 
 echo "[✓] Kanata installed and running."
-echo "    Use the menu-bar icon to switch between mods.kbd and bare.kbd."
