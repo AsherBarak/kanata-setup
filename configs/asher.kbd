@@ -73,7 +73,7 @@
   (w e) esc 300 all-released ()
   (i o) bspc 300 all-released ()
   (x c) tab 300 all-released ()
-  (, .) ret 300 all-released ()
+  (, .) bspc 300 all-released ()
 )
 
 (defalias
