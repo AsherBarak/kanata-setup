@@ -17,11 +17,19 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/AsherBarak/kanata-setup/main/install.sh)"
 ```
 
+The script installs the Karabiner VirtualHIDDevice driver (standalone, not the
+Karabiner-Elements app) and asks you to allow it in **System Settings → General
+→ Login Items & Extensions → Driver Extensions**.
+
 **After running the script, you must:**
-1. Open **System Settings → Privacy & Security → Input Monitoring**
-2. Click **+** and add `/Applications/Kanata.app`
-3. Enable the toggle
-4. **Restart your Mac**
+1. Open **System Settings → Privacy & Security → Input Monitoring**, click **+**,
+   add `/Applications/Kanata.app`, and enable the toggle
+2. Open **System Settings → Privacy & Security → Accessibility**, click **+**,
+   add `/Applications/Kanata.app`, and enable the toggle
+3. **Restart your Mac**
+
+Do not install Karabiner-Elements. It ships a newer driver than kanata supports,
+and its own service takes the keyboard, so kanata cannot use it.
 
 ### Windows 10/11 (PowerShell)
 
@@ -78,6 +86,8 @@ sudo launchctl list | grep kanata
 ```bash
 sudo launchctl unload /Library/LaunchDaemons/com.asbr.kanata.plist
 sudo rm /Library/LaunchDaemons/com.asbr.kanata.plist
+sudo launchctl bootout system /Library/LaunchDaemons/org.pqrs.karabiner-vhiddaemon.plist
+sudo rm /Library/LaunchDaemons/org.pqrs.karabiner-vhiddaemon.plist
 rm -rf /Applications/Kanata.app
 rm -rf ~/.kanata-setup
 rm -rf ~/.config/kanata
@@ -92,6 +102,18 @@ Kanata cannot access your keyboard. Fix:
 1. Remove Kanata from Input Monitoring
 2. Re-add `/Applications/Kanata.app`
 3. **Restart your Mac** (required for permission to take effect)
+
+### "kanata needs macOS Accessibility permission"
+
+Add `/Applications/Kanata.app` in **Privacy & Security → Accessibility** too.
+Kanata needs both Input Monitoring and Accessibility.
+
+### "output backend unavailable" or "exclusive access and device already open"
+
+The driver is the wrong version, or Karabiner-Elements is installed. Uninstall
+Karabiner-Elements (`brew uninstall --cask karabiner-elements`), restart, and run
+the script again. It installs the driver version that kanata supports
+(`DRIVER_VERSION` in `install.sh`).
 
 ### Kanata not starting at boot
 
@@ -113,7 +135,7 @@ sudo launchctl load /Library/LaunchDaemons/com.asbr.kanata.plist
 
 ## How It Works (macOS)
 
-1. **Karabiner-Elements** provides the virtual HID driver (required for kanata to create virtual keyboard events)
+1. **Karabiner VirtualHIDDevice driver** (standalone, at the version kanata supports) provides the virtual keyboard that kanata sends keys through. A second LaunchDaemon, `org.pqrs.karabiner-vhiddaemon`, starts its daemon at boot
 2. **Kanata.app** is a wrapper around the kanata binary (required for Input Monitoring permission)
 3. **LaunchDaemon** runs kanata as root at startup (required for keyboard access)
-4. **Input Monitoring** permission allows kanata to read keyboard input
+4. **Input Monitoring** and **Accessibility** permissions allow kanata to read keyboard input

@@ -24,6 +24,8 @@ DEST="$HOME/.kanata-setup"
 CONFIG_NAME="asher.kbd"
 KANATA_APP="/Applications/Kanata.app"
 LAUNCH_DAEMON="/Library/LaunchDaemons/com.asbr.kanata.plist"
+DRIVER_LAUNCH_DAEMON="/Library/LaunchDaemons/org.pqrs.karabiner-vhiddaemon.plist"
+DRIVER_VERSION="6.2.0"   # supported by kanata 1.12 (see Step 2)
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
@@ -66,25 +68,66 @@ else
     echo -e "${GREEN}✓ Homebrew is installed${NC}"
 fi
 
-# Step 2: Install Karabiner-Elements (required for virtual HID driver)
+# Step 2: Install the Karabiner VirtualHIDDevice driver (kanata sends keys through it)
+#
+# Use the standalone driver, not the Karabiner-Elements app:
+#  - Karabiner-Elements ships a newer driver than kanata supports, and kanata
+#    then cannot connect to it ("output backend unavailable").
+#  - Karabiner-Elements' own service takes the keyboard exclusively, so kanata
+#    cannot open it ("exclusive access and device already open").
+# Each kanata release names its supported driver version under "macOS" in its
+# release notes. Change DRIVER_VERSION when kanata changes it.
 echo ""
-echo -e "${YELLOW}Step 2: Checking Karabiner DriverKit...${NC}"
-if [[ ! -d "/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice" ]]; then
-    echo "Installing Karabiner-Elements (required for virtual HID driver)..."
-    brew install --cask karabiner-elements
-    
-    echo -e "${YELLOW}Opening Karabiner-Elements to activate the driver...${NC}"
-    open "/Applications/Karabiner-Elements.app"
-    
-    echo ""
-    echo -e "${YELLOW}Please:${NC}"
-    echo "  1. Allow the system extension when prompted"
-    echo "  2. Grant Input Monitoring permission when prompted"
-    echo "  3. Re-run this script after Karabiner is set up"
-    echo ""
-    read -p "Press Enter once Karabiner-Elements is set up, or Ctrl+C to exit..."
+echo -e "${YELLOW}Step 2: Checking Karabiner VirtualHIDDevice driver v${DRIVER_VERSION}...${NC}"
+DRIVER_DIR="/Library/Application Support/org.pqrs/Karabiner-DriverKit-VirtualHIDDevice"
+DRIVER_DAEMON="$DRIVER_DIR/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Daemon"
+DRIVER_MANAGER="/Applications/.Karabiner-VirtualHIDDevice-Manager.app/Contents/MacOS/Karabiner-VirtualHIDDevice-Manager"
+
+if [[ -d "/Applications/Karabiner-Elements.app" ]]; then
+    echo -e "${RED}Karabiner-Elements is installed. It conflicts with kanata.${NC}"
+    echo "Uninstall it first:  brew uninstall --cask karabiner-elements"
+    exit 1
 fi
-echo -e "${GREEN}✓ Karabiner DriverKit is installed${NC}"
+
+installed=$(defaults read "$DRIVER_DIR/Applications/Karabiner-VirtualHIDDevice-Daemon.app/Contents/Info" CFBundleShortVersionString 2>/dev/null || true)
+if [[ "$installed" != "$DRIVER_VERSION" ]]; then
+    pkg="/tmp/Karabiner-DriverKit-VirtualHIDDevice-${DRIVER_VERSION}.pkg"
+    curl -fsSL -o "$pkg" "https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice/releases/download/v${DRIVER_VERSION}/Karabiner-DriverKit-VirtualHIDDevice-${DRIVER_VERSION}.pkg"
+    pkgutil --check-signature "$pkg" | grep -q "Developer ID Installer: Fumihiko Takayama (G43BCU2T37)" || {
+        echo -e "${RED}Error: driver package signature is not the expected one${NC}"; exit 1; }
+    sudo installer -pkg "$pkg" -target /
+    sudo "$DRIVER_MANAGER" activate
+
+    echo ""
+    echo -e "${YELLOW}Allow the driver:${NC} System Settings -> General -> Login Items & Extensions"
+    echo "  -> Driver Extensions -> enable .Karabiner-VirtualHIDDevice-Manager"
+    read -r -p "Press Enter after you allow it, or Ctrl+C to exit..." < /dev/tty || true
+fi
+
+# The driver daemon must run as root at startup. Karabiner-Elements used to start it.
+sudo tee "$DRIVER_LAUNCH_DAEMON" > /dev/null << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>org.pqrs.karabiner-vhiddaemon</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>$DRIVER_DAEMON</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+</dict>
+</plist>
+EOF
+sudo chown root:wheel "$DRIVER_LAUNCH_DAEMON"
+sudo chmod 644 "$DRIVER_LAUNCH_DAEMON"
+sudo launchctl bootout system "$DRIVER_LAUNCH_DAEMON" 2>/dev/null || true
+sudo launchctl bootstrap system "$DRIVER_LAUNCH_DAEMON"
+echo -e "${GREEN}✓ Karabiner VirtualHIDDevice driver v${DRIVER_VERSION} is installed and its daemon runs${NC}"
 
 # Step 3: Install Kanata
 echo ""
@@ -209,15 +252,15 @@ echo -e "${BLUE}========================================${NC}"
 echo ""
 echo -e "${YELLOW}MANUAL STEP REQUIRED:${NC}"
 echo ""
-echo "1. Open System Settings → Privacy & Security → Input Monitoring"
+echo "Kanata needs TWO permissions. Do both:"
 echo ""
-echo "2. Click the '+' button"
+echo "1. System Settings → Privacy & Security → Input Monitoring"
+echo "   Click '+', select /Applications/Kanata.app, enable the toggle"
 echo ""
-echo "3. Navigate to /Applications and select 'Kanata.app'"
+echo "2. System Settings → Privacy & Security → Accessibility"
+echo "   Click '+', select /Applications/Kanata.app, enable the toggle"
 echo ""
-echo "4. Enable the toggle next to Kanata"
-echo ""
-echo -e "${RED}5. RESTART YOUR MAC for the permission to take effect${NC}"
+echo -e "${RED}3. RESTART YOUR MAC for the permissions to take effect${NC}"
 echo ""
 echo -e "${BLUE}----------------------------------------${NC}"
 echo "After restart, verify with:"
