@@ -8,11 +8,20 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 * Home‑row tap/hold: **A‑S‑D‑F / J‑K‑L‑;** become Shift‑Ctrl‑Alt‑Super  
 * Fast typing does not trigger mods: a home-row key pressed less than 150 ms
   after another key types its letter (`tap-hold-require-prior-idle`)  
-* **Space** held = arrow/navigation layer: IJKL arrows; U / O = Cmd+Left /
-  Cmd+Right (left / right edge of the line, so in Hebrew U goes to the end)  
+* **Space** held = navigation layer. Keys around J go left, keys around L go right:
+  * I J K L = arrows
+  * U / O = Cmd+Left / Cmd+Right: left / right edge of the line (in Hebrew, U goes to the end)
+  * M / . = Ctrl+Shift+Tab / Ctrl+Tab: previous / next tab
+  * H / ; = Ctrl+Option+Left / Right: window to the left / right half (Rectangle)  
 * A keyboard that you connect after kanata starts gets the layout too
   (macOS keyboard watcher, see below)  
 * Chords: **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Backspace
+
+## Rectangle (macOS)
+
+Space+H and Space+; send the default Rectangle shortcuts for the left and right
+half. Install Rectangle (`brew install --cask rectangle`), open it, select the
+**Recommended** shortcuts, and give it Accessibility permission.
 
 ## Quick Install
 

@@ -16,15 +16,18 @@
   @fn    _     _     _                 @spc              _     _     _      _  _       _
 )
 
-;; U and O are J and L "super-charged": the left / right edge of the line.
-;; macOS moves by screen side, not text order, so in Hebrew (RTL) text
-;; U goes to the end of the line and O to the start, the same as J and L.
+;; Keys around J go left, keys around L go right:
+;;   U / O  line edge      Cmd+Left / Cmd+Right. macOS moves by screen side, so
+;;                         in Hebrew (RTL) text U goes to the end of the line.
+;;   M / .  tab            Ctrl+Shift+Tab / Ctrl+Tab (no letter, so the Hebrew
+;;                         layout does not change it)
+;;   H / ;  window half    Ctrl+Option+Left / Right, the Rectangle defaults
 (deflayer nav
   _      _     _     _     _     _     _     _     _     _     _     _     _
   _      _     _     _     _     _     _     _     _     _     _     _     _     del
   _      _     _     _     _     _     _     M-lft up    M-rght _     _     _
-  _      _     _     _     _    _     _      lft   down  rght  _     _     _     _
-  _      _     _     _     _     _     _     _     _     _     _     _
+  _      _     _     _     _    _     C-A-lft lft  down  rght  C-A-rght _  _     _
+  _      _     _     _     _     _     _     C-S-tab _   C-tab _     _
   _      _     _     _                 _                 _     _     home   pgup pgdn    end
 )
 
