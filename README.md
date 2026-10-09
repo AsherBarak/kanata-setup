@@ -81,6 +81,8 @@ kanata on macOS grabs only the keyboards that are connected when it starts.
 The watcher LaunchDaemon `com.asbr.kanata-watch` reads the keyboard list every
 3 seconds. When a new keyboard appears, it restarts kanata, and the new keyboard
 gets the layout in about 5 seconds. A keyboard that goes away needs no restart.
+When the watcher starts, it also restarts kanata one time, because kanata can
+have started before a keyboard connected.
 
 `install.sh` installs it. To install or update only the watcher:
 

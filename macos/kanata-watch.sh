@@ -24,6 +24,10 @@ log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*"; }
 
 prev=$(keyboards)
 log "started; keyboards: $(echo "$prev" | grep -c .)"
+# kanata may have started before some of these keyboards connected
+# (for example, the watcher was just installed), so restart it one time.
+log "restarting kanata"
+launchctl kickstart -k "$KANATA_JOB"
 
 while sleep "$INTERVAL"; do
   cur=$(keyboards)
