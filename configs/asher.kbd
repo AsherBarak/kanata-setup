@@ -91,15 +91,17 @@
   ;; tap for esc, hold for lctl
   caps (tap-hold $tap-time $hold-time esc lctl)
 
-  ;; Home row mods
-  a (tap-hold-release-keys $tap-time $hold-time (multi a @tap) lsft $left-hand-keys)
-  s (tap-hold-release-keys $tap-time $hold-time (multi s @tap) lctl $left-hand-keys)
-  d (tap-hold-release-keys $tap-time $hold-time (multi d @tap) lalt $left-hand-keys)
-  f (tap-hold-release-keys $tap-time $hold-time (multi f @tap) lmet $left-hand-keys)
-  j (tap-hold-release-keys $tap-time $hold-time (multi j @tap) rmet $right-hand-keys)
-  k (tap-hold-release-keys $tap-time $hold-time (multi k @tap) ralt $right-hand-keys)
-  l (tap-hold-release-keys $tap-time $hold-time (multi l @tap) rctl $right-hand-keys)
-  ; (tap-hold-release-keys $tap-time $hold-time (multi ; @tap) rsft $right-hand-keys)
+  ;; Home row mods. A key is a mod only after it is held $hold-time ms.
+  ;; A press of another key does not make it a mod early, so a fast overlap
+  ;; ("for", "di") types letters. A same-hand key press makes it a letter at once.
+  a (tap-hold-tap-keys $tap-time $hold-time (multi a @tap) lsft $left-hand-keys)
+  s (tap-hold-tap-keys $tap-time $hold-time (multi s @tap) lctl $left-hand-keys)
+  d (tap-hold-tap-keys $tap-time $hold-time (multi d @tap) lalt $left-hand-keys)
+  f (tap-hold-tap-keys $tap-time $hold-time (multi f @tap) lmet $left-hand-keys)
+  j (tap-hold-tap-keys $tap-time $hold-time (multi j @tap) rmet $right-hand-keys)
+  k (tap-hold-tap-keys $tap-time $hold-time (multi k @tap) ralt $right-hand-keys)
+  l (tap-hold-tap-keys $tap-time $hold-time (multi l @tap) rctl $right-hand-keys)
+  ; (tap-hold-tap-keys $tap-time $hold-time (multi ; @tap) rsft $right-hand-keys)
   spc (tap-hold $tap-time $hold-time spc (layer-toggle nav))
 
   fnl (tap-hold 200 200 fn (layer-toggle fn))
