@@ -20,7 +20,7 @@ NC='\033[0m'
 
 # Configuration
 REPO_URL="${REPO_URL:-https://github.com/AsherBarak/kanata-setup.git}"
-DEST="$HOME/.kanata-setup"
+DEST="${KANATA_SETUP_DIR:-$HOME/.kanata-setup}"   # set KANATA_SETUP_DIR to use an existing clone
 CONFIG_NAME="asher.kbd"
 KANATA_APP="/Applications/Kanata.app"
 LAUNCH_DAEMON="/Library/LaunchDaemons/com.asbr.kanata.plist"
@@ -141,7 +141,8 @@ fi
 KANATA_BIN=$(which kanata)
 echo "Kanata binary: $KANATA_BIN"
 
-# Step 4: Clone/update repo and copy configs
+# Step 4: Clone/update repo and link ~/.config/kanata to its configs/
+# The link makes a repo edit the live config: tap Caps Lock (lrld) to reload it.
 echo ""
 echo -e "${YELLOW}Step 4: Setting up configuration files...${NC}"
 if [[ -d "$DEST" ]]; then
@@ -149,12 +150,17 @@ if [[ -d "$DEST" ]]; then
     git -C "$DEST" pull --quiet
 else
     echo "Cloning configuration repo..."
-    git clone --depth=1 "$REPO_URL" "$DEST"
+    git clone "$REPO_URL" "$DEST"
 fi
 
-mkdir -p "$HOME/.config/kanata"
-cp "$DEST/configs/"*.kbd "$HOME/.config/kanata/"
-echo -e "${GREEN}✓ Copied config files to ~/.config/kanata/${NC}"
+mkdir -p "$HOME/.config"
+if [[ -d "$HOME/.config/kanata" && ! -L "$HOME/.config/kanata" ]]; then
+    backup="$HOME/.config/kanata.backup-$(date +%Y%m%d%H%M%S)"
+    mv "$HOME/.config/kanata" "$backup"
+    echo "Moved the old ~/.config/kanata to $backup"
+fi
+ln -sfn "$DEST/configs" "$HOME/.config/kanata"
+echo -e "${GREEN}✓ Linked ~/.config/kanata to $DEST/configs${NC}"
 
 # Validate config
 echo "Validating configuration..."

@@ -42,6 +42,9 @@
   process-unmapped-keys   yes
   concurrent-tap-hold     yes
   allow-hardware-repeat   no
+  ;; A tap-hold key pressed less than this many ms after another key
+  ;; types its letter at once. This stops mods in fast typing ("so", "fo").
+  tap-hold-require-prior-idle 150
 )
 
 (defvar

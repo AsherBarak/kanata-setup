@@ -6,8 +6,10 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 
 * Identical keymap on both operating systems  
 * Home‑row tap/hold: **A‑S‑D‑F / J‑K‑L‑;** become Shift‑Ctrl‑Alt‑Super  
-* **Space** held = arrow/navigation layer (HJKL arrows, etc.)  
-* Chords: **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Enter
+* Fast typing does not trigger mods: a home-row key pressed less than 150 ms
+  after another key types its letter (`tap-hold-require-prior-idle`)  
+* **Space** held = arrow/navigation layer (IJKL arrows, etc.)  
+* Chords: **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Backspace
 
 ## Quick Install
 
@@ -56,6 +58,18 @@ kanata-setup/
 curl -fsSL https://raw.githubusercontent.com/AsherBarak/kanata-setup/main/install.sh | bash -s -- --config mods.kbd
 ```
 
+## Editing the Config (macOS)
+
+`~/.config/kanata` is a link to the `configs/` folder of the repo clone. Edit a
+file in the repo, then **tap Caps Lock** (`lrld`) to reload it. No restart is
+necessary.
+
+The installer clones to `~/.kanata-setup`. To use a clone that you already have:
+
+```bash
+KANATA_SETUP_DIR=~/Dev/Personal/kanata-setup ./install.sh
+```
+
 ## Managing Kanata (macOS)
 
 ### View logs
@@ -89,8 +103,8 @@ sudo rm /Library/LaunchDaemons/com.asbr.kanata.plist
 sudo launchctl bootout system /Library/LaunchDaemons/org.pqrs.karabiner-vhiddaemon.plist
 sudo rm /Library/LaunchDaemons/org.pqrs.karabiner-vhiddaemon.plist
 rm -rf /Applications/Kanata.app
+rm ~/.config/kanata   # the link
 rm -rf ~/.kanata-setup
-rm -rf ~/.config/kanata
 # Optional: brew uninstall kanata
 ```
 
