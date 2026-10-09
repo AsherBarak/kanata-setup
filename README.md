@@ -8,7 +8,8 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 * Home‑row tap/hold: **A‑S‑D‑F / J‑K‑L‑;** become Shift‑Ctrl‑Alt‑Super  
 * Fast typing does not trigger mods: a home-row key pressed less than 150 ms
   after another key types its letter (`tap-hold-require-prior-idle`)  
-* **Space** held = arrow/navigation layer (IJKL arrows, etc.)  
+* **Space** held = arrow/navigation layer: IJKL arrows; U / O = Cmd+Left /
+  Cmd+Right (left / right edge of the line, so in Hebrew U goes to the end)  
 * A keyboard that you connect after kanata starts gets the layout too
   (macOS keyboard watcher, see below)  
 * Chords: **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Backspace
