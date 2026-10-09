@@ -250,6 +250,11 @@ echo -e "${YELLOW}Step 7: Loading LaunchDaemon...${NC}"
 sudo launchctl load "$LAUNCH_DAEMON"
 echo -e "${GREEN}✓ LaunchDaemon loaded${NC}"
 
+# Step 8: Keyboard watcher (kanata grabs only keyboards connected at start)
+echo ""
+echo -e "${YELLOW}Step 8: Installing the keyboard watcher...${NC}"
+"$DEST/macos/install-watch.sh"
+
 # Final instructions
 echo ""
 echo -e "${BLUE}========================================${NC}"

@@ -9,6 +9,8 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 * Fast typing does not trigger mods: a home-row key pressed less than 150 ms
   after another key types its letter (`tap-hold-require-prior-idle`)  
 * **Space** held = arrow/navigation layer (IJKL arrows, etc.)  
+* A keyboard that you connect after kanata starts gets the layout too
+  (macOS keyboard watcher, see below)  
 * Chords: **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Backspace
 
 ## Quick Install
@@ -47,6 +49,9 @@ kanata-setup/
 │   ├─ asher.kbd  ← full layout with home-row mods
 │   ├─ mods.kbd   ← alternative layout
 │   └─ bare.kbd   ← pass‑through (no remapping)
+├─ macos/
+│   ├─ kanata-watch.sh   ← restarts kanata when a keyboard connects
+│   └─ install-watch.sh  ← installs the watcher LaunchDaemon
 ├─ install.sh     ← macOS installer
 └─ install.ps1    ← Windows installer
 ```
@@ -69,6 +74,23 @@ The installer clones to `~/.kanata-setup`. To use a clone that you already have:
 ```bash
 KANATA_SETUP_DIR=~/Dev/Personal/kanata-setup ./install.sh
 ```
+
+## Keyboard Watcher (macOS)
+
+kanata on macOS grabs only the keyboards that are connected when it starts.
+The watcher LaunchDaemon `com.asbr.kanata-watch` reads the keyboard list every
+3 seconds. When a new keyboard appears, it restarts kanata, and the new keyboard
+gets the layout in about 5 seconds. A keyboard that goes away needs no restart.
+
+`install.sh` installs it. To install or update only the watcher:
+
+```bash
+./macos/install-watch.sh
+```
+
+Its log is `/tmp/kanata-watch.log`. The daemon runs a root-owned copy of the
+script in `/Library/Application Support/kanata-setup/`, so run
+`install-watch.sh` again after you change `kanata-watch.sh`.
 
 ## Managing Kanata (macOS)
 
@@ -100,6 +122,9 @@ sudo launchctl list | grep kanata
 ```bash
 sudo launchctl unload /Library/LaunchDaemons/com.asbr.kanata.plist
 sudo rm /Library/LaunchDaemons/com.asbr.kanata.plist
+sudo launchctl bootout system /Library/LaunchDaemons/com.asbr.kanata-watch.plist
+sudo rm /Library/LaunchDaemons/com.asbr.kanata-watch.plist
+sudo rm -rf "/Library/Application Support/kanata-setup"
 sudo launchctl bootout system /Library/LaunchDaemons/org.pqrs.karabiner-vhiddaemon.plist
 sudo rm /Library/LaunchDaemons/org.pqrs.karabiner-vhiddaemon.plist
 rm -rf /Applications/Kanata.app
