@@ -49,8 +49,12 @@
   concurrent-tap-hold     yes
   allow-hardware-repeat   no
   ;; A tap-hold key pressed less than this many ms after another key
-  ;; types its letter at once. This stops mods in fast typing ("so", "fo").
-  tap-hold-require-prior-idle 150
+  ;; types its letter at once. This stops mods in fast typing ("so", "fo"),
+  ;; and the letter appears on press, not on release.
+  tap-hold-require-prior-idle 200
+  ;; The same for chords: less than this many ms after another key,
+  ;; chord keys type their letters at once and no chord can start.
+  chords-v2-min-idle 200
 )
 
 (defvar
@@ -77,12 +81,14 @@
 )
 
 (defchordsv2
+  ;; A chord key waits this many ms for its partner before it types its
+  ;; letter, so keep it short. Press the chord keys at the same time.
   ;; TODO: Works but caps lock LED light doesn't turn on
-  (lsft rsft) caps 300 all-released ()
-  (w e) esc 300 all-released ()
-  (i o) bspc 300 all-released ()
-  (x c) tab 300 all-released ()
-  (, .) bspc 300 all-released ()
+  (lsft rsft) caps 50 all-released ()
+  (w e) esc 50 all-released ()
+  (i o) bspc 50 all-released ()
+  (x c) tab 50 all-released ()
+  (, .) bspc 50 all-released ()
 )
 
 (defalias

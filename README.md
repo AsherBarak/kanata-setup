@@ -6,8 +6,9 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
 
 * Identical keymap on both operating systems  
 * Home‑row tap/hold: **A‑S‑D‑F / J‑K‑L‑;** become Shift‑Ctrl‑Alt‑Super  
-* Fast typing does not trigger mods: a home-row key pressed less than 150 ms
-  after another key types its letter (`tap-hold-require-prior-idle`)  
+* Fast typing does not trigger mods or chords: a key pressed less than 200 ms
+  after another key types its letter at once (`tap-hold-require-prior-idle`,
+  `chords-v2-min-idle`). A home-row key becomes a mod only after a 200 ms hold  
 * **Space** held = navigation layer. Keys around J go left, keys around L go right:
   * I J K L = arrows
   * U / O = Cmd+Left / Cmd+Right: left / right edge of the line (in Hebrew, U goes to the end)
@@ -15,7 +16,7 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
   * H / ; = Ctrl+Option+Left / Right: window to the left / right half (Rectangle)  
 * A keyboard that you connect after kanata starts gets the layout too
   (macOS keyboard watcher, see below)  
-* Chords: **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Backspace
+* Chords (press both keys within 50 ms): **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Backspace
 
 ## Rectangle (macOS)
 
