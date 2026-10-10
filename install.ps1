@@ -24,7 +24,7 @@ copy-item "$dest\configs\*.kbd" $cfgDir -Force
 
 $startup = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\kanata-startup.bat"
 "@echo off
-start kanata.exe --cfg ""%USERPROFILE%\kanata\mods.kbd""
+start kanata.exe --cfg ""%USERPROFILE%\kanata\asher.kbd""
 " | set-content $startup -Encoding ASCII
 
 Write-Host "[✓] Kanata installed. Log off and back on, or run '$startup' to start now."

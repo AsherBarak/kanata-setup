@@ -57,21 +57,12 @@ irm https://raw.githubusercontent.com/AsherBarak/kanata-setup/main/install.ps1 |
 ```
 kanata-setup/
 ├─ configs/
-│   ├─ asher.kbd  ← full layout with home-row mods
-│   ├─ mods.kbd   ← alternative layout
-│   └─ bare.kbd   ← pass‑through (no remapping)
+│   └─ asher.kbd  ← full layout with home-row mods
 ├─ macos/
 │   ├─ kanata-watch.sh   ← restarts kanata when a keyboard connects
 │   └─ install-watch.sh  ← installs the watcher LaunchDaemon
 ├─ install.sh     ← macOS installer
 └─ install.ps1    ← Windows installer
-```
-
-## Using a Different Config
-
-```bash
-# Use a specific config file
-curl -fsSL https://raw.githubusercontent.com/AsherBarak/kanata-setup/main/install.sh | bash -s -- --config mods.kbd
 ```
 
 ## Editing the Config (macOS)

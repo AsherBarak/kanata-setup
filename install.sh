@@ -6,9 +6,6 @@
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/AsherBarak/kanata-setup/main/install.sh | bash
 #
-# Or with a specific config:
-#   curl -fsSL ... | bash -s -- --config mods.kbd
-#
 set -euo pipefail
 
 # Colors for output
