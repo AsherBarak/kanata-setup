@@ -14,6 +14,8 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
   * U / O = Cmd+Left / Cmd+Right: left / right edge of the line (in Hebrew, U goes to the end)
   * M / . = Ctrl+Shift+Tab / Ctrl+Tab: previous / next tab
   * H / ; = Ctrl+Option+Left / Right: window to the left / right half (Rectangle)  
+  * N / / = Ctrl+Left / Ctrl+Right: desktop to the left / right
+  * Y = Ctrl+Up: Mission Control (all desktops)
 * A keyboard that you connect after kanata starts gets the layout too
   (macOS keyboard watcher, see below)  
 * Chords (press both keys within 50 ms): **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Backspace

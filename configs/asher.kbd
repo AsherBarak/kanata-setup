@@ -22,12 +22,14 @@
 ;;   M / .  tab            Ctrl+Shift+Tab / Ctrl+Tab (no letter, so the Hebrew
 ;;                         layout does not change it)
 ;;   H / ;  window half    Ctrl+Option+Left / Right, the Rectangle defaults
+;;   N / /  desktop        Ctrl+Left / Ctrl+Right, the macOS defaults
+;;   Y      all desktops   Ctrl+Up, Mission Control
 (deflayer nav
   _      _     _     _     _     _     _     _     _     _     _     _     _
   _      _     _     _     _     _     _     _     _     _     _     _     _     del
-  _      _     _     _     _     _     _     M-lft up    M-rght _     _     _
+  _      _     _     _     _     _     C-up  M-lft up    M-rght _     _     _
   _      _     _     _     _    _     C-A-lft lft  down  rght  C-A-rght _  _     _
-  _      _     _     _     _     _     _     C-S-tab _   C-tab _     _
+  _      _     _     _     _     _     C-lft C-S-tab _   C-tab C-rght _
   _      _     _     _                 _                 _     _     home   pgup pgdn    end
 )
 
