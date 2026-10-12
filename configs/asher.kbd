@@ -8,7 +8,7 @@
 )
 
 (deflayer base
-  _      brdwn brup  mctl  sls   dtn   dnd   prev  pp    next  mute  voldwn volu
+  @esc   brdwn brup  mctl  sls   dtn   dnd   prev  pp    next  mute  voldwn volu
   _      _     _     _     _     _     _     _     _     _     _     _     _     _
   _      _     _     _     _     _     _     _     _     _     _     _     _
   lrld   @a    @s    @d    @f   _     _      @j    @k    @l    @;    _     _     _
@@ -122,6 +122,14 @@
   l (tap-hold-tap-keys $tap-time $hold-time (multi l @tap) rctl $right-hand-keys)
   ; (tap-hold-tap-keys $tap-time $hold-time (multi ; @tap) rsft $right-hand-keys)
   spc (tap-hold $tap-time $hold-time spc (layer-toggle nav))
+
+  ;; Esc, but with Cmd held it is ` (Cmd+` = next window of the app, with Shift
+  ;; the previous one). The UHK has Esc where the MacBook has `, so Cmd + the
+  ;; top-left key does the same on both keyboards. With Option also held it
+  ;; stays Esc, so Cmd+Option+Esc (Force Quit) still works.
+  esc (switch
+    ((and (or lmet rmet) (not lalt ralt))) grv break
+    () esc break)
 
   ;; Scroll (nav layer R / V)
   mwu (mwheel-up   $mw-interval $mw-lines)

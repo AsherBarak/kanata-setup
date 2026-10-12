@@ -17,6 +17,9 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
   * N / / = Ctrl+Left / Ctrl+Right: desktop to the left / right
   * Y = Ctrl+Up: Mission Control (all desktops)
   * R / V = scroll up / down while held (1 line every 70 ms)
+* **Cmd + Esc** = Cmd+`: next window of the app (with Shift, the previous one).
+  The UHK has Esc where the MacBook has `, so Cmd + the top-left key works the
+  same on both. Cmd+Option+Esc (Force Quit) does not change
 * A keyboard that you connect after kanata starts gets the layout too
   (macOS keyboard watcher, see below)  
 * Chords (press both keys within 50 ms): **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Backspace
