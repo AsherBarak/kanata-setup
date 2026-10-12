@@ -24,12 +24,15 @@
 ;;   H / ;  window half    Ctrl+Option+Left / Right, the Rectangle defaults
 ;;   N / /  desktop        Ctrl+Left / Ctrl+Right, the macOS defaults
 ;;   Y      all desktops   Ctrl+Up, Mission Control
+;; Left hand:
+;;   R / V  scroll         up / down, like a mouse wheel, while held. The
+;;                         home-row mods stay, so Space+D+J is still a word left.
 (deflayer nav
   _      _     _     _     _     _     _     _     _     _     _     _     _
   _      _     _     _     _     _     _     _     _     _     _     _     _     del
-  _      _     _     _     _     _     C-up  M-lft up    M-rght _     _     _
+  _      _     _     _     @mwu  _     C-up  M-lft up    M-rght _     _     _
   _      _     _     _     _    _     C-A-lft lft  down  rght  C-A-rght _  _     _
-  _      _     _     _     _     _     C-lft C-S-tab _   C-tab C-rght _
+  _      _     _     _     @mwd  _     C-lft C-S-tab _   C-tab C-rght _
   _      _     _     _                 _                 _     _     home   pgup pgdn    end
 )
 
@@ -65,6 +68,11 @@
   ;; fingers faster.
   tap-time 200
   hold-time 200
+
+  ;; Scroll speed: every mw-interval ms, scroll mw-lines lines.
+  ;; On macOS the distance is in lines, not the 120-per-notch of Linux/Windows.
+  mw-interval 70
+  mw-lines 1
 
   left-hand-keys (
     q w e r t
@@ -114,6 +122,10 @@
   l (tap-hold-tap-keys $tap-time $hold-time (multi l @tap) rctl $right-hand-keys)
   ; (tap-hold-tap-keys $tap-time $hold-time (multi ; @tap) rsft $right-hand-keys)
   spc (tap-hold $tap-time $hold-time spc (layer-toggle nav))
+
+  ;; Scroll (nav layer R / V)
+  mwu (mwheel-up   $mw-interval $mw-lines)
+  mwd (mwheel-down $mw-interval $mw-lines)
 
   fnl (tap-hold 200 200 fn (layer-toggle fn))
 

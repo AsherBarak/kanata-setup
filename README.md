@@ -16,6 +16,7 @@ Cross‑platform home‑row‑mods keyboard layout for macOS **and** Windows, pl
   * H / ; = Ctrl+Option+Left / Right: window to the left / right half (Rectangle)  
   * N / / = Ctrl+Left / Ctrl+Right: desktop to the left / right
   * Y = Ctrl+Up: Mission Control (all desktops)
+  * R / V = scroll up / down while held (1 line every 70 ms)
 * A keyboard that you connect after kanata starts gets the layout too
   (macOS keyboard watcher, see below)  
 * Chords (press both keys within 50 ms): **W+E** = Esc, **I+O** = Backspace, **X+C** = Tab, **,+.** = Backspace
